@@ -196,20 +196,22 @@ class RouterAgent:
 # ═══════════════════════════════════════════════════════════
 _router_agent = None
 _init_error = None
+_current_api_key = None
 
-def _initialize_agents():
+def _initialize_agents(api_key=None):
     """Build all LLM-dependent agents. Called once on first chat message."""
-    global _router_agent, _init_error
+    global _router_agent, _init_error, _current_api_key
 
-    api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    api_key = api_key or os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if not api_key:
         _init_error = (
             "GOOGLE_API_KEY (or GEMINI_API_KEY) environment variable is not set. "
-            "Please set it and restart the app to enable AI features."
+            "Please provide a key via the UI or set the environment variable."
         )
         return
 
     try:
+        os.environ["GOOGLE_API_KEY"] = api_key
         model = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
         embedding = GoogleGenerativeAIEmbeddings(model="gemini-embedding-001")
 
@@ -291,6 +293,7 @@ and refund/return policies. Keep it concise.
             orders_node=orders_node,
             refund_node=refund_node,
         )
+        _current_api_key = api_key
     except Exception as e:
         _init_error = f"Failed to initialize AI agents: {e}"
 
@@ -319,10 +322,19 @@ def detect_route(user_msg: str) -> str:
         return "SMALLTALK"
     return "PRODUCT"
 
-def chat(user_msg, history, request: gr.Request):
-    global _router_agent, _init_error
+def chat(user_msg, history, api_key_input, request: gr.Request):
+    global _router_agent, _init_error, _current_api_key
 
-    # Lazy init on first message
+    # Determine which key to use: UI input takes priority over env var
+    ui_key = api_key_input.strip() if api_key_input else None
+
+    # Reinitialize if a new/different key is provided via the UI
+    if ui_key and ui_key != _current_api_key:
+        _router_agent = None
+        _init_error = None
+        _initialize_agents(api_key=ui_key)
+
+    # Lazy init on first message (no UI key, use env var)
     if _router_agent is None and _init_error is None:
         _initialize_agents()
 
@@ -331,7 +343,8 @@ def chat(user_msg, history, request: gr.Request):
         error_msg = _init_error or "AI agents not initialized."
         return (
             f"⚠️ **Configuration Error**\n\n{error_msg}\n\n"
-            "Please set the `GOOGLE_API_KEY` environment variable and restart the app."
+            "Please provide a Google API key above or set the "
+            "`GOOGLE_API_KEY` environment variable and restart the app."
         )
 
     # Get or create a thread for this session
@@ -368,14 +381,20 @@ Chat with our HAL 9000-powered golf shop assistant. Ask about:
 """
 
 EXAMPLES = [
-    "Hello!",
-    "What golf products do you have?",
-    "Tell me about the FairwayPro Iron Set",
-    "How much does it cost?",
-    "Show me order G1001",
-    "What's your refund policy for damaged items?",
-    "Can I return custom-fit clubs?",
+    ["Hello!"],
+    ["What golf products do you have?"],
+    ["Tell me about the FairwayPro Iron Set"],
+    ["How much does it cost?"],
+    ["Show me order G1001"],
+    ["What's your refund policy for damaged items?"],
+    ["Can I return custom-fit clubs?"],
 ]
+
+api_key_box = gr.Textbox(
+    type="password",
+    label="Google API Key (optional if set via environment)",
+    placeholder="Paste your Google API key here",
+)
 
 demo = gr.ChatInterface(
     fn=chat,
@@ -383,6 +402,7 @@ demo = gr.ChatInterface(
     description=DESCRIPTION,
     examples=EXAMPLES,
     chatbot=gr.Chatbot(height=500),
+    additional_inputs=[api_key_box],
 )
 
 if __name__ == "__main__":
