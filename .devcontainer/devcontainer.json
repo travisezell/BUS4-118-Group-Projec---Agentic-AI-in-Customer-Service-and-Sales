@@ -1,7 +1,7 @@
 {
   "name": "BUS4-118 Agentic AI",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
-  "postCreateCommand": "pip install --upgrade pip && pip install langchain langgraph langchain-google-genai langchain-community langchain-chroma langchain-openai google-generativeai pandas pypdf pysqlite3-binary ipykernel",
+  "postCreateCommand": "pip install --upgrade pip && pip install langchain langgraph langchain-google-genai langchain-community langchain-chroma langchain-openai google-generativeai pandas pypdf pysqlite3-binary ipykernel gradio",
   "customizations": {
     "vscode": {
       "extensions": [
