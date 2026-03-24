@@ -8,10 +8,20 @@ import uuid
 import pandas as pd
 import gradio as gr
 
+# Load environment variables from .env file if present
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv not installed; rely on system env vars
+
 # ── pysqlite3 shim (needed for Chroma in Codespaces) ──
-__import__("pysqlite3")
-import sys
-sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+try:
+    __import__("pysqlite3")
+    import sys
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+except ImportError:
+    pass  # Standard sqlite3 is fine on this platform
 
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_core.tools import tool
@@ -186,7 +196,7 @@ using ONLY the available tools. Keep responses concise and lightly snarky.
 
 # Agent node helper
 def agent_node(state, agent, name, config):
-    thread_id = config["metadata"]["thread_id"]
+    thread_id = config["configurable"]["thread_id"]
     result = agent.invoke(state, {"configurable": {"thread_id": thread_id}})
     if not isinstance(result, ToolMessage):
         result = AIMessage(result["messages"][-1].content)
@@ -232,7 +242,12 @@ class RouterAgent:
         return {"messages": [self.model.invoke(msgs)]}
 
     def find_route(self, state):
-        return state["messages"][-1].content.strip()
+        route = state["messages"][-1].content.strip().upper()
+        valid = {"PRODUCT", "ORDER", "REFUND", "SMALLTALK", "END"}
+        for v in valid:
+            if v in route:
+                return v
+        return "END"  # safe fallback
 
 router_agent = RouterAgent(
     model,

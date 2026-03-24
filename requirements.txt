@@ -1,0 +1,12 @@
+gradio
+langchain
+langgraph
+langchain-google-genai
+langchain-community
+langchain-chroma
+langchain-text-splitters
+google-generativeai
+pandas
+pypdf
+pysqlite3-binary
+python-dotenv
