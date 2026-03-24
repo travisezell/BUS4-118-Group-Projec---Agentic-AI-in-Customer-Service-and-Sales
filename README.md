@@ -26,22 +26,39 @@ A multi-agent AI chatbot for **Golf Gear Pro**, an online golf equipment store. 
 
 ## Setup Instructions
 
-### 1. Open in GitHub Codespaces (recommended)
+### 1. Add your Google API key (do this BEFORE creating the Codespace)
+- Go to [Google AI Studio](https://aistudio.google.com/app/apikeys) and create a free API key
+- In GitHub, go to **Settings → Codespaces → Secrets** and add a secret named `GOOGLE_API_KEY`
+- Under "Repository access", make sure this repository is selected
+
+### 2. Open in GitHub Codespaces
 1. Click the green **Code** button at the top of this repo
 2. Click the **Codespaces** tab
 3. Click **Create codespace on main**
-4. Wait ~1 minute for the environment to load
+4. Wait ~1–2 minutes for the environment to load
 
-### 2. Add your Google API key
-- Go to [Google AI Studio](https://aistudio.google.com/app/apikeys) and create a free API key
-- In GitHub, go to **Settings → Codespaces → Secrets** and add a secret named `GOOGLE_API_KEY`
-- Make sure to give it access to this repository
+### 3. Select the Python kernel
+When you open a notebook for the first time, Codespaces will ask you to select a kernel:
+1. Click **Select Kernel** (top-right of the notebook)
+2. Choose **Python Environments**
+3. Select the default **Python 3.x** interpreter (e.g., `Python 3.12.1` — the exact version depends on your Codespace image)
+
+> **Note:** Use the same kernel for all three notebooks.
+
+### 4. Install dependencies
+The first cell in `code_03` installs all required packages. When you run it for the first time you will see:
+```
+pip install langchain-google-genai langchain langchain-community langchain-chroma langchain-openai langgraph pandas pypdf pysqlite3-binary
+```
+This only needs to run once per Codespace session. After it finishes, the remaining cells will work.
 
 ## Running the Notebooks
-Open each notebook and click **Run All**. Run them in order:
-1. `code_03_XX Product QnA Agentic chatbot (1).ipynb` — sets up product agent
-2. `code_04_XX Orders Chatbot with custom agent (1).ipynb` — sets up order + refund agents
-3. `code_06_XX Multi-agent chatbots with routing.ipynb` — wires up the router and runs demos
+Open each notebook and click **Run All**. Run them **in order** — notebook 06 imports 03 and 04 via `%run`:
+1. `code_03_XX Product QnA Agentic chatbot (1).ipynb` — product agent + pip install
+2. `code_04_XX Orders Chatbot with custom agent (1).ipynb` — order + refund agents
+3. `code_06_XX Multi-agent chatbots with routing.ipynb` — router + multi-turn demo
+
+> **Troubleshooting:** If you see `ModuleNotFoundError`, re-run the first cell of `code_03` to install packages, then restart the kernel (**Ctrl+Shift+P → "Restart Kernel"**) and run again.
 
 ## Interactive Chat App (Optional)
 For a visual demo, run the Gradio chat interface:
@@ -49,7 +66,7 @@ For a visual demo, run the Gradio chat interface:
 pip install gradio
 python app.py
 ```
-This launches a web-based chat UI where you can talk to the router agent directly — much easier to demo than scrolling through notebook cells.
+This launches a web-based chat UI at `http://localhost:7860` where you can talk to the router agent directly — much easier to demo than scrolling through notebook cells. Codespaces will automatically offer to open the forwarded port in your browser.
 
 ## Project Structure
 ```
