@@ -73,6 +73,10 @@ For a visual demo, run the Gradio chat interface:
 ```bash
 ./run.sh
 ```
+To force a specific port, set `PORT` before launching:
+```bash
+PORT=7860 ./run.sh
+```
 This launches a web-based chat UI at `http://localhost:7860` where you can talk to the router agent directly — much easier to demo than scrolling through notebook cells. Codespaces will automatically offer to open the forwarded port in your browser.
 
 ## Project Structure
