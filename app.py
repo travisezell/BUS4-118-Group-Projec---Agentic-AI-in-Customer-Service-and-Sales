@@ -325,12 +325,12 @@ EXAMPLES = [
 
 demo = gr.ChatInterface(
     fn=chat,
-    type="messages",
+    
     title="Golf Gear Pro ⛳",
     description=DESCRIPTION,
     examples=EXAMPLES,
     theme=gr.themes.Soft(primary_hue="emerald"),
-    chatbot=gr.Chatbot(height=500, type="messages"),
+    chatbot=gr.Chatbot(height=500),
 )
 
 if __name__ == "__main__":
