@@ -1,0 +1,6 @@
+product_id,name,category,price,description,loft_or_specs,skill_level,tags
+P2001,StormDrive 10.5° Driver,driver,449.99,Forgiving 460cc driver designed for mid-handicap golfers.,"10.5°, regular flex, 45.5 in shaft",intermediate,"driver, distance, forgiveness"
+P2002,FairwayPro Iron Set (4-PW),irons,799.0,Cavity-back irons focused on consistency and launch.,"Steel shafts, regular flex","beginner, intermediate","irons, game-improvement"
+P2003,SoftSpin Tour Golf Balls (12-pack),balls,39.99,Urethane-cover ball with soft feel and high greenside spin.,3-piece construction,"intermediate, advanced","balls, spin, soft"
+P2004,GreenLine Stand Bag,bag,189.5,Lightweight stand bag with 14-way top and 7 pockets.,"5.0 lbs, dual straps",all,"bag, lightweight, walking"
+P2005,TrueGrip All-Weather Glove,glove,24.0,Durable glove with great grip in rain or heat.,"Sizes S-XL, left/right hand",all,"glove, grip"

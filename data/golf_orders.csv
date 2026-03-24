@@ -1,0 +1,6 @@
+order_id,customer_name,email,product_name,category,status,order_date,total_amount
+G1001,Alex Kim,alex@example.com,StormDrive 10.5° Driver,driver,Shipped,2026-03-15,449.99
+G1002,Jordan Lee,jordan@example.com,FairwayPro Iron Set (4-PW),irons,Processing,2026-03-18,799.0
+G1003,Taylor Smith,taylor@example.com,SoftSpin Tour Golf Balls (12-pack),balls,Delivered,2026-03-10,39.99
+G1004,Morgan Diaz,morgan@example.com,GreenLine Stand Bag,bag,Delivered,2026-03-05,189.5
+G1005,Casey Brown,casey@example.com,TrueGrip All-Weather Glove,glove,Cancelled,2026-03-20,24.0
