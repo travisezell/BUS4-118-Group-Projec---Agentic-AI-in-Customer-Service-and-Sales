@@ -5,8 +5,12 @@ Requires GOOGLE_API_KEY environment variable.
 """
 
 import uuid
+import warnings
 import pandas as pd
 import gradio as gr
+
+# Suppress langgraph deprecation warning for create_react_agent
+warnings.filterwarnings("ignore", category=DeprecationWarning, module="langgraph")
 
 # Load environment variables from .env file if present
 try:
@@ -344,7 +348,6 @@ demo = gr.ChatInterface(
     title="Golf Gear Pro ⛳",
     description=DESCRIPTION,
     examples=EXAMPLES,
-    theme=gr.themes.Soft(primary_hue="emerald"),
     chatbot=gr.Chatbot(height=500),
 )
 
