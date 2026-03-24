@@ -1,0 +1,21 @@
+{
+  "name": "BUS4-118 Agentic AI",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {}
+  },
+  "postCreateCommand": "pip install langchain langgraph langchain-google-genai langchain-community langchain-chroma langchain-openai google-generativeai pandas pypdf pysqlite3-binary",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  },
+  "forwardPorts": [8888]
+}
