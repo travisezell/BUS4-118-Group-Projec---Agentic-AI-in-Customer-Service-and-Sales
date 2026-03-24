@@ -1,12 +1,14 @@
 """
 Golf Gear Pro — Agentic Chat Interface
-Run: pip install -r requirements.txt && python app.py
-Requires GOOGLE_API_KEY environment variable for LLM features.
+Run: ./run.sh
+Requires GOOGLE_API_KEY environment variable.
 """
 
 import os
+import socket
 import uuid
 import warnings
+import inspect
 import pandas as pd
 import gradio as gr
 
@@ -396,15 +398,50 @@ api_key_box = gr.Textbox(
     placeholder="Paste your Google API key here",
 )
 
-demo = gr.ChatInterface(
-    fn=chat,
-    title="Golf Gear Pro ⛳",
-    description=DESCRIPTION,
-    examples=EXAMPLES,
-    chatbot=gr.Chatbot(height=500),
-    additional_inputs=[api_key_box],
-)
+chat_interface_kwargs = {
+    "fn": chat,
+    "title": "Golf Gear Pro ⛳",
+    "description": DESCRIPTION,
+    "examples": EXAMPLES,
+    "chatbot": gr.Chatbot(height=500),
+    "additional_inputs": [api_key_box],
+}
+
+# Gradio 6.x removed `theme` from ChatInterface kwargs.
+if "theme" in inspect.signature(gr.ChatInterface.__init__).parameters:
+    chat_interface_kwargs["theme"] = gr.themes.Soft(primary_hue="emerald")
+
+demo = gr.ChatInterface(**chat_interface_kwargs)
+
+
+def find_open_port(preferred_port: int) -> int:
+    """Use preferred_port when available, otherwise fall back to an OS-assigned open port."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            s.bind(("0.0.0.0", preferred_port))
+            return preferred_port
+        except OSError:
+            s.bind(("0.0.0.0", 0))
+            return s.getsockname()[1]
 
 if __name__ == "__main__":
-    print("\n⛳ Golf Gear Pro chat starting at http://localhost:7860\n")
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    requested_port = os.getenv("PORT", "7860")
+    try:
+        preferred_port = int(requested_port)
+    except ValueError:
+        preferred_port = 7860
+
+    if not (1 <= preferred_port <= 65535):
+        preferred_port = 7860
+
+    server_port = find_open_port(preferred_port)
+    if server_port != preferred_port:
+        print(f"\nRequested port {preferred_port} unavailable; using open port {server_port}.\n")
+
+    print("\n" + "=" * 64)
+    print(f"APP READY: open http://localhost:{server_port}")
+    print("If prompted in Codespaces, forward this same port.")
+    print("=" * 64 + "\n")
+    print(f"⛳ Golf Gear Pro chat starting at http://localhost:{server_port}\n")
+    demo.launch(server_name="0.0.0.0", server_port=server_port, share=False)

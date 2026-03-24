@@ -46,25 +46,32 @@ When you open a notebook for the first time, Codespaces will ask you to select a
 > **Note:** Use the same kernel for all three notebooks.
 
 ### 4. Install dependencies
-The first cell in `code_03` installs all required packages. When you run it for the first time you will see:
+Install the pinned dependencies from `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
 ```
-pip install langchain-google-genai langchain langchain-community langchain-chroma langchain-openai langgraph pandas pypdf pysqlite3-binary
+
+Or run one command to create `.venv` (if needed) and install everything:
+
+```bash
+./setup.sh
 ```
-This only needs to run once per Codespace session. After it finishes, the remaining cells will work.
+
+Use one of the two options above before running notebooks or the app.
 
 ## Running the Notebooks
 Open each notebook and click **Run All**. Run them **in order** — notebook 06 imports 03 and 04 via `%run`:
-1. `code_03_XX Product QnA Agentic chatbot (1).ipynb` — product agent + pip install
+1. `code_03_XX Product QnA Agentic chatbot (1).ipynb` — product agent
 2. `code_04_XX Orders Chatbot with custom agent (1).ipynb` — order + refund agents
 3. `code_06_XX Multi-agent chatbots with routing.ipynb` — router + multi-turn demo
 
-> **Troubleshooting:** If you see `ModuleNotFoundError`, re-run the first cell of `code_03` to install packages, then restart the kernel (**Ctrl+Shift+P → "Restart Kernel"**) and run again.
+> **Troubleshooting:** If you see `ModuleNotFoundError`, run `./setup.sh`, then restart the kernel (**Ctrl+Shift+P → "Restart Kernel"**) and run again.
 
 ## Interactive Chat App (Optional)
 For a visual demo, run the Gradio chat interface:
 ```bash
-pip install gradio
-python app.py
+./run.sh
 ```
 This launches a web-based chat UI at `http://localhost:7860` where you can talk to the router agent directly — much easier to demo than scrolling through notebook cells. Codespaces will automatically offer to open the forwarded port in your browser.
 
@@ -74,6 +81,9 @@ This launches a web-based chat UI at `http://localhost:7860` where you can talk 
 ├── code_04_XX Orders Chatbot with custom agent (1).ipynb  # Order + refund agents
 ├── code_06_XX Multi-agent chatbots with routing.ipynb  # Router + multi-turn demo
 ├── app.py                                              # Gradio chat interface
+├── requirements.txt                                    # Pinned Python dependencies
+├── setup.sh                                            # One-command dependency setup
+├── run.sh                                              # Setup + app launcher
 ├── data/
 │   ├── golf_products.csv
 │   ├── golf_orders.csv
