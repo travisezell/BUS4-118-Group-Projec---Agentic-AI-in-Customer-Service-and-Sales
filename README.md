@@ -26,6 +26,19 @@ A multi-agent AI chatbot for **Golf Gear Pro**, an online golf equipment store. 
 
 ## Setup Instructions
 
+### Quick Start (Fastest Path)
+If you just want to run the app:
+
+```bash
+./setup.sh
+export GOOGLE_API_KEY="your_key_here"
+./run.sh
+```
+
+Open the URL printed in the terminal. If port `7860` is already in use, the app automatically picks another open port and prints it.
+
+If no API key is set, the UI still opens, but chat replies will show a configuration error until `GOOGLE_API_KEY` (or `GEMINI_API_KEY`) is provided.
+
 ### 1. Add your Google API key (do this BEFORE creating the Codespace)
 - Go to [Google AI Studio](https://aistudio.google.com/app/apikeys) and create a free API key
 - In GitHub, go to **Settings → Codespaces → Secrets** and add a secret named `GOOGLE_API_KEY`
@@ -77,7 +90,7 @@ To force a specific port, set `PORT` before launching:
 ```bash
 PORT=7860 ./run.sh
 ```
-This launches a web-based chat UI at `http://localhost:7860` where you can talk to the router agent directly — much easier to demo than scrolling through notebook cells. Codespaces will automatically offer to open the forwarded port in your browser.
+This launches a web-based chat UI where you can talk to the router agent directly. By default it tries `http://localhost:7860`; if that port is unavailable, it will print and use another open port. Codespaces will automatically offer to open the forwarded port in your browser.
 
 ## Project Structure
 ```
