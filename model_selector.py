@@ -30,6 +30,8 @@ def select_best_gemini_model(
     require_tools: bool = True,
     temperature: float = 0.0,
     max_output_tokens: int = 256,
+    request_timeout: float = 20.0,
+    max_retries: int = 1,
     debug: bool = True,
 ):
     """
@@ -51,6 +53,8 @@ def select_best_gemini_model(
                 model=name,
                 temperature=temperature,
                 max_output_tokens=max_output_tokens,
+                timeout=request_timeout,
+                max_retries=max_retries,
             )
 
             # Basic reachability probe.
