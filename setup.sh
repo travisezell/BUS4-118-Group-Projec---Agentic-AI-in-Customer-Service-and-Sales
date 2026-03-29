@@ -15,14 +15,20 @@ if [[ ! -d "$VENV_DIR" ]]; then
   python3 -m venv "$VENV_DIR"
 fi
 
+# If a stale venv exists without pip, recreate it cleanly.
+if ! "$PYTHON_BIN" -m pip --version >/dev/null 2>&1; then
+  echo "Existing .venv is missing pip; recreating .venv..."
+  rm -rf "$VENV_DIR"
+  python3 -m venv "$VENV_DIR"
+fi
+
 echo "Installing pinned dependencies..."
 "$PYTHON_BIN" -m pip install --upgrade pip
 "$PYTHON_BIN" -m pip install -r "$ROOT_DIR/requirements.txt"
 
 echo
-if [[ -z "${GOOGLE_API_KEY:-}" ]]; then
-  echo "Warning: GOOGLE_API_KEY is not set. The app will not work until it is configured."
-fi
-
 echo "Setup complete."
-echo "Run the app with: $PYTHON_BIN $ROOT_DIR/app.py"
+echo "Run notebooks in order:"
+echo "  1) code_03_XX Product QnA Agentic chatbot (1).ipynb"
+echo "  2) code_04_XX Orders Chatbot with custom agent (1).ipynb"
+echo "  3) code_06_XX Multi-agent chatbots with routing.ipynb"

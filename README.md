@@ -1,127 +1,77 @@
 # BUS4-118 Group Project: Agentic AI in Customer Service and Sales
 
-## Overview
-A multi-agent AI chatbot for **Golf Gear Pro**, an online golf equipment store. Built with LangChain, LangGraph, and Google Gemini, the system routes customer inquiries to specialized agents — each with a personality inspired by HAL 9000 (polite, competent, and just a touch condescending).
+## What This Repo Is
+This project builds a Golf Gear Pro customer-service chatbot using LangGraph.
 
-## Agents
-| Agent | Notebook | What It Handles |
-|-------|----------|-----------------|
-| **Product Agent** | `code_03` | Golf product features, specs, pricing, and recommendations via RAG + pricing tool |
-| **Order Agent** | `code_04` | Order lookups and status updates using `golf_orders.csv` |
-| **Refund Agent** | `code_04` | Return/refund policy questions using hardcoded store policies |
-| **Router Agent** | `code_06` | Receives all user input and routes to the correct specialist agent |
+It has:
+- Product Q&A agent (RAG + price lookup)
+- Order agent (order lookup + status update)
+- Refund agent (policy lookup)
+- Router agent (routes each message to the right specialist)
 
-## Key Features
-- **3 distinct inquiry types**: product Q&A, order management, refund/return policies
-- **Conversation memory**: LangGraph `MemorySaver` preserves context across turns (e.g., "How much does it cost?" remembers which product you asked about)
-- **LLM-based routing**: Router agent classifies each message and dispatches to the right specialist
-- **Snarky HAL 9000 persona**: Every agent is helpful but can't resist a dry observation about your golf game
+## Files You Actually Run
+- `code_03_XX Product QnA Agentic chatbot (1).ipynb`: product agent
+- `code_04_XX Orders Chatbot with custom agent (1).ipynb`: order + refund agents
+- `code_06_XX Multi-agent chatbots with routing.ipynb`: router + multi-agent flow
 
-## Data Files
-| File | Description |
-|------|-------------|
-| `data/golf_products.csv` | Product catalog: drivers, irons, balls, bags, gloves with prices and specs |
-| `data/golf_orders.csv` | Sample orders with status tracking |
-| `data/store_policies.txt` | Golf Gear Pro return, refund, shipping, and cancellation policies |
-
-## Setup Instructions
-
-### Quick Start (Fastest Path)
-If you just want to run the app:
+## Quick Start
+1. Install dependencies:
 
 ```bash
-./setup.sh
+bash setup.sh
+```
+
+2. Set API key (either one works):
+
+```bash
 export GOOGLE_API_KEY="your_key_here"
-./run.sh
 ```
 
-Open the URL printed in the terminal. If port `7860` is already in use, the app automatically picks another open port and prints it.
-
-If no API key is set, the UI still opens, but chat replies will show a configuration error until `GOOGLE_API_KEY` (or `GEMINI_API_KEY`) is provided.
-
-### 1. Add your Google API key (do this BEFORE creating the Codespace)
-- Go to [Google AI Studio](https://aistudio.google.com/app/apikeys) and create a free API key
-- In GitHub, go to **Settings → Codespaces → Secrets** and add a secret named `GOOGLE_API_KEY`
-- Under "Repository access", make sure this repository is selected
-
-### 2. Open in GitHub Codespaces
-1. Click the green **Code** button at the top of this repo
-2. Click the **Codespaces** tab
-3. Click **Create codespace on main**
-4. Wait ~1–2 minutes for the environment to load
-
-### 3. Select the Python kernel
-When you open a notebook for the first time, Codespaces will ask you to select a kernel:
-1. Click **Select Kernel** (top-right of the notebook)
-2. Choose **Python Environments**
-3. Select the default **Python 3.x** interpreter (e.g., `Python 3.12.1` — the exact version depends on your Codespace image)
-
-> **Note:** Use the same kernel for all three notebooks.
-
-### 4. Install dependencies
-Install the pinned dependencies from `requirements.txt`:
+Optional but recommended for consistent runs:
 
 ```bash
-pip install -r requirements.txt
+export GEMINI_MODEL="gemini-1.5-flash"
 ```
 
-Or run one command to create `.venv` (if needed) and install everything:
+3. Run notebooks in order: `code_03` -> `code_04` -> `code_06`
+
+4. Optional: run a full CLI validation in the same order (recommended before demos):
 
 ```bash
-./setup.sh
+bash run_notebooks.sh
 ```
 
-Use one of the two options above before running notebooks or the app.
+If no API key is set, notebook/chat runs will fail until `GOOGLE_API_KEY` (or `GEMINI_API_KEY`) is provided.
 
-## Running the Notebooks
-Open each notebook and click **Run All**. Run them **in order** — notebook 06 imports 03 and 04 via `%run`:
-1. `code_03_XX Product QnA Agentic chatbot (1).ipynb` — product agent
-2. `code_04_XX Orders Chatbot with custom agent (1).ipynb` — order + refund agents
-3. `code_06_XX Multi-agent chatbots with routing.ipynb` — router + multi-turn demo
+## Current Architecture
+`Router` classifies user input into one route:
+- `PRODUCT` -> Product agent
+- `ORDER` -> Order agent
+- `REFUND` -> Refund agent
+- `SMALLTALK` -> small talk response
+- `END` -> stop
 
-> **Troubleshooting:** If you see `ModuleNotFoundError`, run `./setup.sh`, then restart the kernel (**Ctrl+Shift+P → "Restart Kernel"**) and run again.
+Each specialist uses tools and memory (`MemorySaver`) with thread-based conversation state.
 
-## Interactive Chat App (Optional)
-For a visual demo, run the Gradio chat interface:
-```bash
-./run.sh
-```
-To force a specific port, set `PORT` before launching:
-```bash
-PORT=7860 ./run.sh
-```
-This launches a web-based chat UI where you can talk to the router agent directly. By default it tries `http://localhost:7860`; if that port is unavailable, it will print and use another open port. Codespaces will automatically offer to open the forwarded port in your browser.
+## What Is Implemented vs Not Implemented
+Implemented:
+- Tool-using prompts (explicitly tells model to use tools)
+- LangGraph nodes + edges + conditional routing
+- Checkpointer/memory via `MemorySaver`
+- Per-session `thread_id` handling
+- Stream mode demo in notebook (`code_03`)
+- Planner/executor workflow in notebook (`code_06`)
+- Reflection agent in notebook (`code_06`)
+- Summarizer agent in notebook (`code_06`)
+- Explicit `should_continue` conditional edge in notebook (`code_06`)
 
-## Project Structure
-```
-├── code_03_XX Product QnA Agentic chatbot (1).ipynb   # Product agent
-├── code_04_XX Orders Chatbot with custom agent (1).ipynb  # Order + refund agents
-├── code_06_XX Multi-agent chatbots with routing.ipynb  # Router + multi-turn demo
-├── app.py                                              # Gradio chat interface
-├── requirements.txt                                    # Pinned Python dependencies
-├── setup.sh                                            # One-command dependency setup
-├── run.sh                                              # Setup + app launcher
-├── data/
-│   ├── golf_products.csv
-│   ├── golf_orders.csv
-│   └── store_policies.txt
-└── README.md
-```
+Not currently implemented:
+- None noted for the notebook-first assignment scope.
 
-## Architecture
-```
-User Input
-    │
-    ▼
-┌─────────┐
-│  Router  │ ← LLM classifies: PRODUCT / ORDER / REFUND / SMALLTALK
-└────┬─────┘
-     │
-     ├──→ Product Agent  (RAG + pricing tool)
-     ├──→ Order Agent    (CSV lookup + status update)
-     ├──→ Refund Agent   (policy lookup tool)
-     └──→ Small Talk     (HAL-flavored greeting)
-```
+## Data
+- `data/golf_products.csv`
+- `data/golf_orders.csv`
+- `data/store_policies.txt`
 
 ## Team
-BUS4-118S Section 02 — Group Project
+BUS4-118S Section 02 - Group Project
