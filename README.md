@@ -14,7 +14,7 @@ It has:
 - `code_04_XX Orders Chatbot with custom agent (1).ipynb`: order + refund agents
 - `code_06_XX Multi-agent chatbots with routing.ipynb`: router + multi-agent flow
 
-## Setup And Run (Same Steps For Everyone)
+## Setup And Run
 1. Open a terminal in the repo root.
 2. Create and activate a virtual environment:
 
