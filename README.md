@@ -15,13 +15,13 @@ It has:
 - `code_06_XX Multi-agent chatbots with routing.ipynb`: router + multi-agent flow
 
 ## Setup And Run
-1. A) Open a terminal in the repo root B) copy and paste the following command, then before you run it, C) replace "your_api_key_here" with the actual api key D) Press Enter
+1. A) Open a terminal in the repo root B) copy and paste the following commands, then before you run the `export` line, C) replace "your_api_key_here" with the actual api key (the secret value), D) Press Enter
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-export GOOGLE_API_KEY="your_api_key_here"
+python3 -m venv .venv && \
+source .venv/bin/activate && \
+python -m pip install -r requirements.txt && \
+export GOOGLE_API_KEY="your_api_key_here" && \
 jupyter notebook
 ```
 
