@@ -2,6 +2,10 @@
 
 Use this file as the single source of truth for notebook model setup.
 
+Simple rule:
+- In Codespaces, use `gemini` or `openai`.
+- Use `ollama` only when running notebooks locally on your laptop.
+
 ## 1) Install dependencies
 Run from repo root:
 
@@ -30,6 +34,8 @@ Notes:
 - Ollama runs locally and does not need cloud API keys.
 
 ## 4) Ollama local prerequisites
+Run this only when executing notebooks locally on your laptop.
+
 Install and run Ollama, then pull models:
 
 ```bash
@@ -37,10 +43,6 @@ ollama pull llama3.1:8b
 ollama pull nomic-embed-text
 ```
 
-Important for Codespaces:
-- In GitHub Codespaces, `http://localhost:11434` points to the Codespace container, not your laptop.
-- If Ollama runs on your laptop, use a reachable host URL in `OLLAMA_BASE_URL`, or run Ollama in the same environment as the notebook.
-
 ## 5) Common errors
 - `429 RESOURCE_EXHAUSTED`: cloud quota issue on your API key/project.
-- Connection error with Ollama: verify server is running and reachable from where the notebook is running.
+- Connection error with Ollama: make sure you are running notebook + Ollama in the same local environment.
