@@ -2,6 +2,7 @@ pandas==2.2.3
 pysqlite3-binary==0.5.4.post2; platform_system == "Linux"
 langchain-google-genai==4.2.1
 langchain-openai==1.0.1
+langchain-ollama==1.0.0
 langchain-core==1.2.22
 langchain-chroma==1.1.0
 langchain-text-splitters==1.1.1
