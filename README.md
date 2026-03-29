@@ -24,13 +24,14 @@ It has:
 bash scripts/setup_codespaces.sh
 ```
 
+## LLM Setup Reference
+Use [SETUP_LLM.md](SETUP_LLM.md) for provider setup details.
+
 ## Choose LLM Provider In Notebook
 1. Open the model setup cell near the top of each notebook.
-2. Keep exactly one provider block uncommented and keep the other two commented.
-3. Gemini block: replace `your_gemini_api_key_here`.
-4. OpenAI block: replace `your_openai_api_key_here`.
-5. Ollama block: set `OLLAMA_BASE_URL` and make sure Ollama is running.
-6. Run the setup cell before running the rest of the notebook.
+2. Set `PROVIDER` to `gemini`, `openai`, or `ollama`.
+3. Set `API_KEY` to your key for cloud providers or `None` for Ollama.
+4. Run the setup cell before running the rest of the notebook.
 
 ## Ollama Local Setup
 1. Install Ollama on your machine.
@@ -42,8 +43,9 @@ ollama pull llama3.1:8b
 ollama pull nomic-embed-text
 ```
 
-4. In notebook setup cell, uncomment the Ollama block and comment out Gemini/OpenAI blocks.
+4. In notebook setup cell, set `PROVIDER = "ollama"`.
 5. Use `OLLAMA_BASE_URL="http://localhost:11434"` unless your Ollama server runs elsewhere.
+6. In Codespaces, `localhost` is the Codespace container. If Ollama runs on your laptop, set `OLLAMA_BASE_URL` to a host reachable from Codespaces, or run Ollama in the same environment.
 
 ## Run Notebooks
 1. Open any notebook (`.ipynb`) and choose kernel `Python (.venv BUS4)`.
