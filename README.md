@@ -14,32 +14,37 @@ It has:
 - `code_04_XX Orders Chatbot with custom agent (1).ipynb`: order + refund agents
 - `code_06_XX Multi-agent chatbots with routing.ipynb`: router + multi-agent flow
 
-## Quick Start
-1. Install dependencies:
+## Setup And Run (Same Steps For Everyone)
+1. Open a terminal in the repo root.
+2. Create and activate a virtual environment:
 
 ```bash
-bash setup.sh
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-2. Set API key (either one works):
+3. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Set your API key:
 
 ```bash
 export GOOGLE_API_KEY="your_key_here"
 ```
 
-Optional but recommended for consistent runs:
+Optional model selection:
 
 ```bash
 export GEMINI_MODEL="gemini-1.5-flash"
 ```
 
-3. Run notebooks in order: `code_03` -> `code_04` -> `code_06`
-
-4. Optional: run a full CLI validation in the same order (recommended before demos):
-
-```bash
-bash run_notebooks.sh
-```
+5. Run notebooks in this exact order:
+- `code_03_XX Product QnA Agentic chatbot (1).ipynb`
+- `code_04_XX Orders Chatbot with custom agent (1).ipynb`
+- `code_06_XX Multi-agent chatbots with routing.ipynb`
 
 If no API key is set, notebook/chat runs will fail until `GOOGLE_API_KEY` (or `GEMINI_API_KEY`) is provided.
 
