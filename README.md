@@ -58,20 +58,6 @@ If no API key is set, notebook/chat runs will fail until `GOOGLE_API_KEY` (or `G
 
 Each specialist uses tools and memory (`MemorySaver`) with thread-based conversation state.
 
-## What Is Implemented vs Not Implemented
-Implemented:
-- Tool-using prompts (explicitly tells model to use tools)
-- LangGraph nodes + edges + conditional routing
-- Checkpointer/memory via `MemorySaver`
-- Per-session `thread_id` handling
-- Stream mode demo in notebook (`code_03`)
-- Planner/executor workflow in notebook (`code_06`)
-- Reflection agent in notebook (`code_06`)
-- Summarizer agent in notebook (`code_06`)
-- Explicit `should_continue` conditional edge in notebook (`code_06`)
-
-Not currently implemented:
-- None noted for the notebook-first assignment scope.
 
 ## Data
 - `data/golf_products.csv`
@@ -80,3 +66,4 @@ Not currently implemented:
 
 ## Team
 BUS4-118S Section 02 - Group Project
+Travis Ezell - All Coding 
