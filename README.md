@@ -32,7 +32,7 @@ pip install -r requirements.txt
 4. Set your API key:
 
 ```bash
-export GOOGLE_API_KEY="your_key_here"
+export GOOGLE_API_KEY="your_key_name_here"
 ```
 
 Optional model selection:
