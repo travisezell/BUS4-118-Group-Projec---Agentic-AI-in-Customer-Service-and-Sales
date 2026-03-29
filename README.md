@@ -15,7 +15,7 @@ It has:
 - `code_06_XX Multi-agent chatbots with routing.ipynb`: router + multi-agent flow
 
 ## Setup And Run
-1. Open a terminal in the repo root and run:
+1. A) Open a terminal in the repo root B) copy and paste the following command, then before you run it, C) replace "your_api_key_here" with the actual api key D) Press Enter
 
 ```bash
 python3 -m venv .venv
