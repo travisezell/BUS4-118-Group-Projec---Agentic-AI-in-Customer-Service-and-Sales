@@ -19,6 +19,12 @@ It has:
 - GitHub account with access to this repository.
 - Gemini API key set as `GOOGLE_API_KEY`.
 
+## Teammate Quick Start
+If you are using GitHub Codespaces, setup should work by doing only these steps:
+1. Add your own API key value for `GOOGLE_API_KEY` in the setup command below.
+2. Run the setup command once.
+3. Select kernel `Python (.venv BUS4)`.
+
 ## Setup And Run
 1. Open this repository in a GitHub Codespace.
 2. Open a terminal in the repo root and run:
