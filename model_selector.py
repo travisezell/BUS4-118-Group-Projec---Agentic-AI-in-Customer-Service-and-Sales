@@ -29,6 +29,7 @@ def select_best_gemini_model(
     candidates: Iterable[str] | None = None,
     require_tools: bool = True,
     temperature: float = 0.0,
+    max_output_tokens: int = 256,
     debug: bool = True,
 ):
     """
@@ -37,13 +38,20 @@ def select_best_gemini_model(
     Health check:
     1) plain invoke works
     2) if require_tools=True, bind_tools path also works
+
+    Token control:
+    - max_output_tokens limits response length to reduce per-call token usage.
     """
     model_names = list(candidates) if candidates is not None else _default_candidates()
     errors: list[str] = []
 
     for name in model_names:
         try:
-            llm = ChatGoogleGenerativeAI(model=name, temperature=temperature)
+            llm = ChatGoogleGenerativeAI(
+                model=name,
+                temperature=temperature,
+                max_output_tokens=max_output_tokens,
+            )
 
             # Basic reachability probe.
             _ = llm.invoke("Reply with exactly OK")
