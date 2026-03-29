@@ -15,33 +15,17 @@ It has:
 - `code_06_XX Multi-agent chatbots with routing.ipynb`: router + multi-agent flow
 
 ## Setup And Run
-1. Open a terminal in the repo root.
-2. Create and activate a virtual environment:
+1. Open a terminal in the repo root and run:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-```
-
-3. Install dependencies:
-
-```bash
 pip install -r requirements.txt
+export GOOGLE_API_KEY="your_api_key_here"
+jupyter notebook
 ```
 
-4. Set your API key:
-
-```bash
-export GOOGLE_API_KEY="your_key_name_here"
-```
-
-Optional model selection:
-
-```bash
-export GEMINI_MODEL="gemini-1.5-flash"
-```
-
-5. Run notebooks in this exact order:
+2. Run notebooks in this order:
 - `code_03_XX Product QnA Agentic chatbot (1).ipynb`
 - `code_04_XX Orders Chatbot with custom agent (1).ipynb`
 - `code_06_XX Multi-agent chatbots with routing.ipynb`
