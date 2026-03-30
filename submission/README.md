@@ -9,13 +9,13 @@ This folder contains all materials submitted for the BUS4-118 Group Project.
   - Example multi-turn conversation
   - Memory and state handling (LangGraph MemorySaver)
   
-  *Open this file in a browser to view the interactive slide deck.*
+  *Open this file in a browser to view the interactive slide deck. The slides require minor scrolling.*
 
-- **`code_03_XX-Product-QnA-Agentic-chatbot-1.pdf`** – Notebook output showing the Product Q&A agent with tools (`getproductprice`, `GetProductFeatures`) answering golf product questions.
+- **`code_03_XX Product QnA Agentic chatbot (1).pdf`** – Notebook output showing the Product Q&A agent with tools (`getproductprice`, `GetProductFeatures`) answering golf product questions.
 
-- **`code_04_XX-Orders-Chatbot-with-custom-agent-1-2.pdf`** – Notebook output showing the Orders and Refund agents with custom tools (`getorderdetails`, `updateorderstatus`, `getrefundpolicy`).
+- **`code_04_XX Orders Chatbot with custom agent (1).pdf`** – Notebook output showing the Orders and Refund agents with custom tools (`getorderdetails`, `updateorderstatus`, `getrefundpolicy`).
 
-- **`code_06_XX-Multi-agent-chatbots-with-routing-3.pdf`** – Notebook output showing the LangGraph RouterAgent and AgenticSupervisor orchestrating multi-agent conversations (PRODUCT / ORDER / REFUND / SMALLTALK).
+- **`code_06_XX Multi-agent chatbots with routing.pdf`** – Notebook output showing the LangGraph RouterAgent and AgenticSupervisor orchestrating multi-agent conversations (PRODUCT / ORDER / REFUND / SMALLTALK).
 
 ## How to Run the Code
 
