@@ -70,7 +70,13 @@ def build_product_models(
         return model, embedding, provider_name, chosen_model
 
     if provider_name == "openai":
-        from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+        try:
+            from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+        except ModuleNotFoundError as e:
+            raise ModuleNotFoundError(
+                "provider='openai' requires the langchain-openai package. "
+                "Install with: pip install langchain-openai"
+            ) from e
 
         chosen_model = model_name or "gpt-4o-mini"
         chosen_embedding = embedding_name or "text-embedding-3-small"
@@ -131,7 +137,13 @@ def build_chat_model(
         return model, provider_name, chosen_model
 
     if provider_name == "openai":
-        from langchain_openai import ChatOpenAI
+        try:
+            from langchain_openai import ChatOpenAI
+        except ModuleNotFoundError as e:
+            raise ModuleNotFoundError(
+                "provider='openai' requires the langchain-openai package. "
+                "Install with: pip install langchain-openai"
+            ) from e
 
         chosen_model = model_name or "gpt-4o-mini"
         model = ChatOpenAI(

@@ -24,6 +24,12 @@ Thumbs.db
 # Jupyter notebook checkpoints
 .ipynb_checkpoints/
 
+# HTML exports (local viewing/screenshots)
+*.html
+
+# Generated notebook digest
+NOTEBOOK_DIGEST.md
+
 # Chroma DB local storage
 chroma_db/
 chroma/
